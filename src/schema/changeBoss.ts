@@ -18,6 +18,9 @@ export const setBossResponseError = Type.Object({
   ok: Type.Literal(false),
   message: Type.Union([
     Type.Literal('incorrect-password-or-phone'),
+    Type.Literal('incorrect-password-format'),
+    Type.Literal('incorrect-phone-format'),
+    Type.Literal('not-your-user')
   ])
 });
 

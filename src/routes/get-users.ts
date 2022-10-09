@@ -2,6 +2,7 @@ import {FastifyPluginAsync} from 'fastify';
 import '../config'
 import {User, UserResponseError, UserResponseSuccess, UserResponseType, UserType} from "../schema/user";
 import {Login, LoginResponseError, LoginResponseSuccess, LoginType} from "../schema/login";
+import {VALIDATE_PASSWORD, VALIDATE_PHONE} from "../config";
 
 const db = require('../db')
 
@@ -31,10 +32,10 @@ export const getUsers: FastifyPluginAsync = async (app) => {
                                    WHERE "user".phone = '${phone}'
                                      AND "user".password = '${password}'`)
 
-      if (!phone.match(/^[0-9]{10}$/)) {
+      if (!phone.match(VALIDATE_PHONE)) {
         return res.code(400).send({ok: false, message: 'incorrect-phone-format'});
       }
-      if (!password.match(/.{3,30}/g)) {
+      if (!password.match(VALIDATE_PASSWORD)) {
         return res.code(400).send({ok: false, message: 'incorrect-password-format'});
       }
       let arr_Bosses = []
